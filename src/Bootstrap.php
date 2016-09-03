@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
@@ -21,4 +24,10 @@ if ($environment !== 'production') {
 }
 $whoops->register();
 
-throw new \Exception;
+$request = Request::createFromGlobals();
+$response = new Response();
+$response->prepare($request);
+
+$response->setStatusCode(Response::HTTP_OK);
+$response->setContent('Hai Hai');
+$response->send();
